@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ICON 2.5CS | Syngenta PPM Việt Nam</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --green: #009639; /* Syngenta green */
+        --olive: #6b8018; /* tab underline */
+        --blue-card: #4f94d4; /* Product info background */
+        --gray-100: #f8f8f8;
+        --gray-300: #e0e0e0;
+        --text-dark: #222;
+        --text-light: #666;
+        --radius: 4px;
+        --max-width: 1200px;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        color: var(--text-dark);
+        background: #fff;
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* ───────── TOP STRIP ───────── */
+      .top-strip {
+        background: #000;
+        color: #fff;
+        font-size: 0.75rem;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.35rem 0.75rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+      }
+
+      .top-strip nav {
+        display: flex;
+        gap: 1.25rem;
+      }
+
+      /* ───────── MAIN HEADER ───────── */
+      header {
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--gray-300);
+        position: fixed;
+        top: 22px;
+        width: 100%;
+        z-index: 999;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .brand img {
+        height: 32px;
+      }
+
+      /* ───────── PRIMARY NAV ───────── */
+      .primary-nav {
+        display: flex;
+        gap: 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .primary-nav a {
+        padding: 0.25rem 0;
+        position: relative;
+      }
+
+      .primary-nav a:hover:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -4px;
+        height: 2px;
+        background: var(--green);
+      }
+
+      /* ───────── BREADCRUMB ───────── */
+      .breadcrumb {
+        font-size: 0.8rem;
+        margin: 110px auto 0;
+        max-width: var(--max-width);
+        padding: 0 1rem;
+        color: var(--text-light);
+      }
+
+      .breadcrumb span {
+        margin-right: 0.25rem;
+      }
+
+      /* ───────── PRODUCT HERO CARD ───────── */
+      .hero-card {
+        max-width: var(--max-width);
+        margin: 1.5rem auto;
+        padding: 0 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .hero-card .logo-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid var(--blue-card);
+        border-radius: var(--radius);
+        min-height: 280px;
+        background: #fff;
+        position: relative;
+      }
+
+      .hero-card .logo-box img {
+        max-width: 260px;
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+      }
+
+      .thumbnail-nav {
+        position: absolute;
+        bottom: 10px;
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+      }
+
+      .thumbnail {
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--gray-300);
+        border-radius: 4px;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: all 0.2s;
+      }
+
+      .thumbnail:hover,
+      .thumbnail.active {
+        opacity: 1;
+        border-color: var(--green);
+      }
+
+      .hero-card .info-box {
+        background: var(--blue-card);
+        color: #fff;
+        border-radius: var(--radius);
+        padding: 1.5rem;
+      }
+
+      .info-box h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .status {
+        display: inline-block;
+        background: #009fe3;
+        color: #fff;
+        font-size: 0.7rem;
+        padding: 0.15rem 0.5rem;
+        border-radius: 4px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+
+      .info-table {
+        font-size: 0.9rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        row-gap: 0.75rem;
+      }
+
+      .info-table span {
+        display: block;
+      }
+
+      /* ───────── TAB BAR ───────── */
+      .tabs {
+        background: #fff;
+        position: sticky;
+        top: 70px;
+        border-bottom: 1px solid var(--gray-300);
+        z-index: 998;
+        transition: box-shadow 0.3s ease;
+      }
+
+      .tabs.scrolled {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .tabs nav {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        display: flex;
+        gap: 2rem;
+        overflow-x: auto;
+        padding: 0 1rem;
+        scrollbar-width: thin;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+      }
+
+      .tabs nav::-webkit-scrollbar {
+        height: 4px;
+        display: none; /* Chrome, Safari */
+      }
+
+      .tabs nav::-webkit-scrollbar-thumb {
+        background-color: var(--gray-300);
+        border-radius: 4px;
+      }
+
+      .tabs button {
+        background: none;
+        border: none;
+        padding: 0.9rem 0;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 1rem;
+        white-space: nowrap;
+        border-bottom: 3px solid transparent;
+        transition: all 0.2s ease;
+      }
+
+      .tabs button.active,
+      .tabs button:focus {
+        border-color: var(--olive);
+        color: var(--olive);
+      }
+
+      /* ───────── CONTENT SECTIONS ───────── */
+      .section {
+        max-width: var(--max-width);
+        margin: 2rem auto;
+        padding: 0 1rem;
+        display: none;
+        animation: fade 0.4s forwards;
+      }
+
+      .section.active {
+        display: block;
+      }
+
+      /* Đảm bảo vị trí section không bị che khi cuộn */
+      .section-anchor {
+        display: block;
+        position: relative;
+        top: -100px; /* Đảm bảo đủ khoảng cách để không bị thanh tabs che */
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      h2.section-title {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+      }
+
+      h2.section-title:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px;
+        width: 48px;
+        height: 2px;
+        background: var(--olive);
+      }
+
+      .subsection-title {
+        font-size: 1.25rem;
+        margin: 1.5rem 0 0.75rem;
+        color: var(--olive);
+      }
+
+      .bullet {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+        list-style: disc;
+      }
+
+      .bullet li {
+        margin-bottom: 0.5rem;
+      }
+
+      .highlight {
+        font-weight: bold;
+        color: var(--olive);
+      }
+
+      .advantage {
+        color: var(--olive);
+        font-weight: 500;
+      }
+
+      /* ───────── DOWNLOAD BOX ───────── */
+      .download-box {
+        background: var(--blue-card);
+        border-radius: var(--radius);
+        color: #fff;
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .download-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .download-item:last-child {
+        border-bottom: none;
+      }
+
+      .download-item a {
+        color: #fff;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      /* ───────── DATA TABLE ───────── */
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0 2rem;
+      }
+
+      .data-table th {
+        background: var(--gray-100);
+        text-align: left;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        border: 1px solid var(--gray-300);
+      }
+
+      .data-table td {
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--gray-300);
+      }
+
+      .data-table tr:nth-child(even) td {
+        background: var(--gray-100);
+      }
+
+      /* ───────── FEATURE CARDS ───────── */
+      .feature-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .feature-card {
+        border: 1px solid var(--gray-300);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        background: var(--gray-100);
+        height: 100%;
+      }
+
+      .feature-card h4 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        color: var(--olive);
+      }
+
+      .feature-card p {
+        margin-bottom: 0.75rem;
+      }
+
+      .feature-card p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ───────── USER GROUP ───────── */
+      .user-group {
+        margin-bottom: 2.5rem;
+      }
+
+      .user-group h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .user-group-description {
+        font-style: italic;
+        margin-bottom: 1rem;
+      }
+
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.25rem;
+        margin-top: 1rem;
+      }
+
+      .benefit-card {
+        border: 1px solid var(--gray-300);
+        border-radius: var(--radius);
+        padding: 1.25rem;
+        height: 100%;
+      }
+
+      .benefit-card h4 {
+        margin-bottom: 0.75rem;
+        color: var(--olive);
+      }
+
+      /* ───────── PROCESS STEPS ───────── */
+      .process {
+        margin-bottom: 2.5rem;
+      }
+
+      .process-name {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+
+      .step {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .step-number {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        background: var(--olive);
+        color: white;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .step-content {
+        flex-grow: 1;
+      }
+
+      .step-title {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      /* ───────── ENVIRONMENTS ───────── */
+      .environments-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.25rem;
+        margin: 1.5rem 0;
+      }
+
+      .environment-card {
+        border: 1px solid var(--gray-300);
+        border-radius: var(--radius);
+        padding: 1.25rem;
+        background: var(--gray-100);
+        height: 100%;
+      }
+
+      .environment-card h4 {
+        margin-bottom: 0.75rem;
+        color: var(--olive);
+      }
+
+      /* ───────── FAQ ───────── */
+      .faq-item {
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid var(--gray-300);
+        padding-bottom: 1.5rem;
+      }
+
+      .faq-item:last-child {
+        border-bottom: none;
+      }
+
+      .faq-question {
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        font-size: 1.1rem;
+      }
+
+      /* ───────── EVIDENCE ───────── */
+      .research-item {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--gray-300);
+      }
+
+      .research-item:last-child {
+        border-bottom: none;
+      }
+
+      .research-name {
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+
+      /* ───────── SUPPORT ───────── */
+      .contact-info {
+        margin: 1.5rem 0;
+      }
+
+      .contact-item {
+        display: flex;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .contact-icon {
+        width: 24px;
+        text-align: center;
+      }
+
+      /* ───────── REFERENCES ───────── */
+      .references-list {
+        margin-top: 1rem;
+      }
+
+      .reference-item {
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--gray-300);
+      }
+
+      .reference-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        cursor: pointer;
+      }
+
+      .reference-toggle {
+        font-size: 1.5rem;
+        width: 20px;
+      }
+
+      .reference-content {
+        padding-left: 30px;
+        margin-top: 0.75rem;
+        display: none;
+      }
+
+      .reference-content.active {
+        display: block;
+      }
+
+      /* ───────── RELATED PRODUCTS ───────── */
+      .related {
+        max-width: var(--max-width);
+        margin: 3rem auto;
+        padding: 0 1rem;
+      }
+
+      .card-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .product-card {
+        border: 1px solid var(--gray-300);
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .product-card:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transform: translateY(-3px);
+      }
+
+      .product-card-image {
+        height: 160px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--gray-100);
+        border-bottom: 1px solid var(--gray-300);
+      }
+
+      .product-card-image img {
+        max-width: 80%;
+        max-height: 80%;
+        object-fit: contain;
+      }
+
+      .product-card-content {
+        padding: 1rem;
+      }
+
+      .product-card-category {
+        display: inline-block;
+        font-size: 0.75rem;
+        color: var(--text-light);
+        margin-bottom: 0.25rem;
+      }
+
+      .product-card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .product-card-specs {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        margin-bottom: 0.75rem;
+      }
+
+      .product-card-link {
+        display: inline-flex;
+        align-items: center;
+        color: var(--olive);
+        font-weight: 600;
+        font-size: 0.9rem;
+        gap: 0.25rem;
+      }
+
+      /* ───────── FOOTER ───────── */
+      footer {
+        background: #111;
+        color: #fff;
+        margin-top: 3rem;
+      }
+
+      .footer-inner {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 3rem 1rem 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+      }
+
+      .footer-col h3 {
+        font-size: 1.1rem;
+        margin-bottom: 1.25rem;
+        font-weight: 600;
+        position: relative;
+      }
+
+      .footer-col h3:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 40px;
+        height: 2px;
+        background: var(--blue-card);
+      }
+
+      .footer-col ul {
+        list-style: none;
+      }
+
+      .footer-col ul li {
+        margin-bottom: 0.75rem;
+      }
+
+      .footer-contact {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .social-icon:hover {
+        background: var(--green);
+      }
+
+      .copyright {
+        text-align: center;
+        padding: 1.5rem;
+        background: #000;
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 0.75rem;
+      }
+
+      /* ───────── ANIMATIONS ───────── */
+      @keyframes fade {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      /* ───────── RESPONSIVE ───────── */
+      @media (max-width: 768px) {
+        .hero-card {
+          grid-template-columns: 1fr;
+        }
+
+        .info-table {
+          grid-template-columns: 1fr;
+        }
+
+        .tabs nav {
+          gap: 1rem;
+        }
+
+        .footer-inner {
+          grid-template-columns: 1fr;
+        }
+
+        .feature-cards,
+        .benefits-grid,
+        .environments-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top utility strip -->
+    <div class="top-strip">
+      <span>GIỚI THIỆU</span>
+      <nav>
+        <a href="#">TÌM KIẾM</a>
+        <a href="#">SYNGENTA TOÀN CẦU</a>
+        <a href="#">ĐĂNG NHẬP</a>
+        <a href="#">VI ▾</a>
+      </nav>
+    </div>
+
+    <!-- Main header -->
+    <header>
+      <div class="brand">
+        <img src="https://i.imgur.com/dsdO1gC.png" alt="PPM logo" />
+        <img src="https://i.imgur.com/XaqXJws.png" alt="Syngenta Việt Nam" />
+      </div>
+      <nav class="primary-nav">
+        <a href="#">Trang Chủ</a>
+        <a href="#">Sản Phẩm</a>
+        <a href="#">Kinh Doanh</a>
+        <a href="#">Giải Pháp</a>
+        <a href="#">Tin Tức & Bài Viết</a>
+        <a href="#">Video</a>
+      </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <span>TRANG CHỦ / SẢN PHẨM / THUỐC DIỆT CÔN TRÙNG /</span>
+      <strong>ICON 2.5CS</strong>
+    </div>
+
+    <!-- Product hero card -->
+    <section class="hero-card">
+      <div class="logo-box">
+        <img
+          src="https://placehold.co/400x150/e2e8f0/9ca3af?text=ICON+2.5CS"
+          alt="ICON 2.5CS"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="thumbnail-nav">
+          <div class="thumbnail active"></div>
+          <div class="thumbnail"></div>
+          <div class="thumbnail"></div>
+        </div>
+      </div>
+      <div class="info-box">
+        <h1>ICON 2.5CS</h1>
+        <span class="status">Đang bán</span>
+        <div class="info-table">
+          <span><strong>Cập nhật:</strong> 11/05/2025</span>
+          <span><strong>Quy cách:</strong> Chai 1L</span>
+          <span><strong>Số đăng ký:</strong><br />VNDP-HC-023-10-15</span>
+          <span><strong>Nhóm hóa chất:</strong> Pyrethroid</span>
+          <span><strong>Thành phần:</strong><br />Lambda-cyhalothrin 2,5%</span>
+          <span><strong>Công thức:</strong> Huyền phù vi nang (CS)</span>
+          <span
+            ><strong>Nhóm tác động:</strong> IRAC 3A - Chất điều hòa kênh
+            natri</span
+          >
+          <span
+            ><strong>Cơ chế tác động:</strong> Tác động lên thần kinh côn
+            trùng</span
+          >
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.75rem">
+          Sản phẩm đã được WHO đánh giá và chứng nhận qua chương trình WHOPES
+        </p>
+      </div>
+    </section>
+
+    <!-- Tabs -->
+    <div class="tabs" id="tabNav">
+      <nav>
+        <button class="tab-link active" data-target="overview">
+          Tổng Quan
+        </button>
+        <button class="tab-link" data-target="application">Ứng Dụng</button>
+        <button class="tab-link" data-target="documents">Tài Liệu</button>
+      </nav>
+    </div>
+
+    <!-- TAB 1: TỔNG QUAN -->
+    <section id="overview" class="section active">
+      <span class="section-anchor" id="anchor-overview"></span>
+      <div id="technology">
+        <h2 class="section-title">Công Nghệ Độc Đáo</h2>
+        <p>
+          <strong>ICON 2.5CS</strong> mang đến giải pháp
+          <span class="highlight"
+            >hiệu quả vượt trội cho việc kiểm soát côn trùng</span
+          >
+          gây hại trong môi trường đô thị và y tế dự phòng. Sản phẩm tích hợp
+          công nghệ vi nang iCAP™ với cấu trúc vỏ kép đặc biệt, bao bọc hoàn hảo
+          hoạt chất Lambda-cyhalothrin. Thiết kế này không chỉ bảo vệ hoạt chất
+          khỏi tác động môi trường mà còn kiểm soát chính xác quá trình giải
+          phóng, mang lại hiệu quả tức thì và kéo dài ấn tượng.
+        </p>
+        <blockquote
+          style="
+            margin: 1.5rem 0;
+            padding: 1rem;
+            border-left: 4px solid var(--olive);
+            background: var(--gray-100);
+          "
+        >
+          <p style="font-style: italic">
+            Công nghệ vi nang iCAP™ của Syngenta được công nhận là phương pháp
+            tiên phong trong kiểm soát côn trùng truyền bệnh (vector), thành
+            công kết hợp hiệu lực diệt côn trùng xuất sắc với độ an toàn vượt
+            trội so với các dạng truyền thống
+          </p>
+        </blockquote>
+      </div>
+
+      <div id="workflow">
+        <h2 class="section-title">Cách Thức Hoạt Động</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <div class="step-title">Bám dính bề mặt</div>
+              <p>
+                Sau khi phun, vi nang bám dính vào bề mặt nhờ cấu trúc bề mặt
+                đặc biệt, tạo thành lớp bảo vệ chứa hoạt chất.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <div class="step-title">
+                Giải phóng hoạt chất theo hai giai đoạn
+              </div>
+              <p>
+                Hệ thống vi nang đa kích thước bắt đầu giải phóng hoạt chất: vi
+                nang nhỏ giải phóng nhanh tạo hiệu quả tức thì, vi nang lớn giải
+                phóng chậm duy trì hiệu lực kéo dài.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <div class="step-title">Bám vào côn trùng</div>
+              <p>
+                Khi côn trùng tiếp xúc với bề mặt đã xử lý, vi nang bám vào lớp
+                sáp trên cơ thể chúng, tiếp tục giải phóng hoạt chất vào côn
+                trùng.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+              <div class="step-title">Tấn công hệ thần kinh</div>
+              <p>
+                Lambda-cyhalothrin tác động lên hệ thần kinh côn trùng, gây hiệu
+                ứng "knockdown" nhanh chóng, dẫn đến tê liệt và tử vong.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          Cấu trúc vỏ kép độc đáo của ICON 2.5CS mang lại nhiều ưu điểm vượt
+          trội.
+          <span class="advantage"
+            >Khả năng bảo vệ hoạt chất khỏi tác động môi trường</span
+          >,
+          <span class="advantage"
+            >hiệu quả diệt côn trùng kéo dài 2-6 tháng</span
+          >, và
+          <span class="advantage"
+            >tính an toàn cao hơn so với các dạng thông thường</span
+          >.
+        </p>
+      </div>
+
+      <div id="features">
+        <h2 class="section-title">Đặc Tính Nổi Bật</h2>
+        <div class="feature-cards">
+          <div class="feature-card">
+            <h4>Công nghệ vi nang vỏ kép tiên tiến</h4>
+            <p>
+              <strong>Thông số kỹ thuật:</strong> Cấu trúc vi nang vỏ kép
+              (dual-walled) với vỏ ngoài trơn láng và vỏ trong cấu trúc xốp, phủ
+              >10.000 vi nang/inch² bề mặt.
+            </p>
+            <p>
+              <strong>Lợi ích cho người dùng:</strong> Bảo vệ hoạt chất tối ưu
+              trước ánh sáng UV, nhiệt độ cao, pH cực đoan và nước mưa, đồng
+              thời duy trì hiệu lực lâu dài.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <h4>Hiệu quả diệt côn trùng vượt trội</h4>
+            <p>
+              <strong>Thông số kỹ thuật:</strong> Tỷ lệ diệt côn trùng đạt
+              85-93% trong 4-6 tháng đầu sau khi xử lý.
+            </p>
+            <p>
+              <strong>Lợi ích cho người dùng:</strong> Kiểm soát hiệu quả cả côn
+              trùng kháng thuốc, giảm tần suất xử lý, tiết kiệm chi phí vận
+              hành.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <h4>An toàn và thân thiện với người dùng</h4>
+            <p>
+              <strong>Thông số kỹ thuật:</strong> Không có dung môi hữu cơ,
+              không mùi, không gây hoen ố bề mặt.
+            </p>
+            <p>
+              <strong>Lợi ích cho người dùng:</strong> Tăng sự hài lòng của
+              khách hàng, an toàn cho PCO và người sử dụng khi tuân thủ hướng
+              dẫn, phù hợp với môi trường nhạy cảm.
+            </p>
+          </div>
+        </div>
+
+        <table class="data-table">
+          <tr>
+            <th>Tiêu chí</th>
+            <th>ICON 2.5CS (Vi nang)</th>
+            <th>Dạng nhũ tương (EC)</th>
+            <th>Dạng bột (WP)</th>
+          </tr>
+          <tr>
+            <td>Mùi</td>
+            <td>Không mùi</td>
+            <td>Mùi dung môi mạnh</td>
+            <td>Ít mùi</td>
+          </tr>
+          <tr>
+            <td>Độ an toàn</td>
+            <td>Cao</td>
+            <td>Trung bình</td>
+            <td>Trung bình</td>
+          </tr>
+          <tr>
+            <td>Tác động lên bề mặt</td>
+            <td>Không hoen ố</td>
+            <td>Có thể hoen ố</td>
+            <td>Có thể để lại vết</td>
+          </tr>
+          <tr>
+            <td>Thời gian tồn lưu</td>
+            <td>2-6 tháng</td>
+            <td>1-2 tháng</td>
+            <td>1-3 tháng</td>
+          </tr>
+          <tr>
+            <td>Ổn định dưới UV</td>
+            <td>Cao</td>
+            <td>Thấp</td>
+            <td>Trung bình</td>
+          </tr>
+          <tr>
+            <td>Hiệu quả với côn trùng kháng thuốc</td>
+            <td>Cao</td>
+            <td>Trung bình</td>
+            <td>Trung bình</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 2: ỨNG DỤNG -->
+    <section id="application" class="section">
+      <span class="section-anchor" id="anchor-application"></span>
+
+      <div id="instructions">
+        <h2 class="section-title">Hướng Dẫn Sử Dụng</h2>
+
+        <div class="process">
+          <div class="process-name">
+            Phun tồn lưu bề mặt (phương pháp chính)
+          </div>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">Pha chế đúng tỷ lệ</div>
+                <p>
+                  Pha chế dung dịch theo tỷ lệ 20-30ml ICON 2.5CS trong 1 lít
+                  nước sạch. Đối với diệt muỗi, kiến, gián: sử dụng liều lượng
+                  20-30 mg hoạt chất/m² (tương đương 20-30 ml chế phẩm/lít
+                  nước). Đối với rệp giường: sử dụng liều lượng 30 mg hoạt
+                  chất/m² (tương đương 30 ml chế phẩm/lít nước).
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">Phun đúng kỹ thuật</div>
+                <p>
+                  Sử dụng bình phun áp suất thông thường, phun đều lên các bề
+                  mặt nơi côn trùng thường di chuyển và ẩn nấp như chân tường,
+                  góc nhà, sau tủ, dưới giường. Phun với lượng 40ml dung dịch đã
+                  pha/m².
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">Đảm bảo thời gian an toàn</div>
+                <p>
+                  Đảm bảo cách ly người và vật nuôi ra khỏi khu vực phun cho đến
+                  khi bề mặt phun khô hoàn toàn, hoặc ít nhất 1 giờ sau khi
+                  phun. Hiệu lực diệt tồn lưu đối với muỗi là 6 tháng, đối với
+                  rệp giường là 2 tháng.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="process">
+          <div class="process-name">Tẩm màn/rèm</div>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">Pha chế dung dịch</div>
+                <p>
+                  Pha chế dung dịch theo tỷ lệ 0,6-0,8ml ICON 2.5CS trong 42ml
+                  nước sạch (tương đương liều lượng 15-20 mg hoạt chất/m²).
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">Thấm đều lên màn/rèm</div>
+                <p>
+                  Thấm vừa đủ dung dịch đã pha cho 1m² màn/rèm, đảm bảo thấm đều
+                  toàn bộ bề mặt màn/rèm.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">Phơi khô và sử dụng</div>
+                <p>
+                  Phơi khô tự nhiên trong bóng râm, tránh ánh nắng trực tiếp.
+                  Hiệu lực diệt tồn lưu kéo dài 6 tháng.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="process">
+          <div class="process-name">Xử lý có trọng điểm</div>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">
+                  Khảo sát và xác định khu vực trọng điểm
+                </div>
+                <p>
+                  Khảo sát và xác định chính xác các khu vực nhiễm côn trùng
+                  nặng, ghi nhận tỷ lệ nhiễm và loại côn trùng cụ thể.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">Tập trung xử lý khu vực trọng điểm</div>
+                <p>
+                  Pha chế dung dịch với nồng độ theo hướng dẫn trên và tập trung
+                  phun vào các khu vực trọng điểm đã xác định, đặc biệt là các
+                  điểm ẩn náu và sinh sôi của côn trùng.
+                </p>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">Tạo hàng rào bảo vệ</div>
+                <p>
+                  Lập hàng rào bảo vệ bằng cách phun theo đường kẻ rộng 10-15cm
+                  quanh các lối vào, cửa sổ, cửa ra vào và các điểm xâm nhập
+                  tiềm ẩn khác.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin: 2rem 0; text-align: center">
+          <img
+            src="https://placehold.co/800x400/e2e8f0/9ca3af?text=Hình+ảnh+minh+họa+quy+trình+sử+dụng+ICON+2.5CS"
+            alt="Hình ảnh minh họa hướng dẫn sử dụng ICON 2.5CS"
+            style="max-width: 100%; border-radius: var(--radius)"
+          />
+        </div>
+      </div>
+
+      <div id="environments">
+        <h2 class="section-title">Môi Trường Sử Dụng</h2>
+        <p>
+          ICON 2.5CS phù hợp với nhiều môi trường khác nhau, từ cơ sở sản xuất
+          đến khu thương mại. Công thức không mùi, không hoen ố và hiệu lực kéo
+          dài đến 6 tháng giúp tối ưu hóa chi phí và nguồn lực cho các tổ chức.
+        </p>
+
+        <div class="environments-grid">
+          <div class="environment-card">
+            <h4>Nhà máy thực phẩm</h4>
+            <p>
+              Đáp ứng tiêu chuẩn HACCP, không gây ô nhiễm sản phẩm. Phun tại khu
+              vực ngoại vi, cống rãnh, góc khuất với liều lượng 20-30ml/lít
+              nước. Hiệu quả 6 tháng/lần, giúp tiết kiệm chi phí đến 40% so với
+              sản phẩm thông thường.
+            </p>
+          </div>
+
+          <div class="environment-card">
+            <h4>Khách sạn và khu lưu trú</h4>
+            <p>
+              Không mùi, không hoen ố, bảo vệ trải nghiệm khách hàng. Xử lý hiệu
+              quả rệp giường, gián, kiến tại góc tường, sau tủ, dưới giường.
+              Liều lượng 20-30ml/lít nước, giúp giảm phàn nàn và tăng khả năng
+              duy trì hợp đồng.
+            </p>
+          </div>
+
+          <div class="environment-card">
+            <h4>Cơ sở y tế</h4>
+            <p>
+              Kiểm soát hiệu quả muỗi Aedes, Anopheles và vector truyền bệnh. An
+              toàn cho bệnh nhân, không ảnh hưởng thiết bị y tế. Công thức không
+              dung môi, hiệu lực đến 6 tháng giúp tối ưu nguồn lực cho chương
+              trình y tế công cộng.
+            </p>
+          </div>
+
+          <div class="environment-card">
+            <h4>Văn phòng và trung tâm thương mại</h4>
+            <p>
+              Phù hợp môi trường đông người, ít gián đoạn hoạt động. Hiệu quả
+              cho nhiều loại côn trùng (muỗi, gián, kiến) với một sản phẩm. Phun
+              6 tháng/lần thay thế 2-3 lần xử lý thông thường, giúp PCO linh
+              hoạt cung cấp dịch vụ.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="faq">
+        <h2 class="section-title">Câu Hỏi Thường Gặp</h2>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            ICON 2.5CS có hiệu quả với muỗi kháng thuốc không?
+          </div>
+          <div class="faq-answer">
+            <p>
+              ICON 2.5CS đã được chứng minh có hiệu quả đối với nhiều quần thể
+              muỗi đã phát triển kháng với DDT, malathion và một số pyrethroid
+              khác. Nghiên cứu thực địa cho thấy tỷ lệ diệt muỗi kháng thuốc đạt
+              70-80%, so với 85-93% đối với quần thể muỗi thông thường. Hiệu quả
+              có thể khác nhau tùy thuộc vào mức độ kháng thuốc.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Thời gian phơi nhiễm cần thiết để sản phẩm phát huy hiệu quả là bao
+            lâu?
+          </div>
+          <div class="faq-answer">
+            <p>
+              Lambda-cyhalothrin trong ICON 2.5CS tạo ra hiệu ứng "knockdown"
+              nhanh chóng, hầu hết côn trùng sẽ bị tê liệt trong vòng 5-10 phút
+              sau khi tiếp xúc. Tuy nhiên, để đạt hiệu quả diệt tối đa, côn
+              trùng cần tiếp xúc với bề mặt đã xử lý ít nhất 15-30 phút. Hiệu
+              quả diệt tối đa đạt được sau 24 giờ.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Làm thế nào để phân biệt ICON 2.5CS với các sản phẩm giả mạo?
+          </div>
+          <div class="faq-answer">
+            <p>
+              Sản phẩm ICON 2.5CS chính hãng của Syngenta luôn có mã QR độc đáo
+              trên mỗi chai, người dùng có thể quét để xác minh. Bao bì được
+              thiết kế với các yếu tố bảo mật như logo chìm và màu sắc chuyển
+              đổi theo góc nhìn. Ngoài ra, sản phẩm chính hãng có mùi nhẹ đặc
+              trưng, không quá nồng và không có cặn sau khi pha loãng. Luôn mua
+              từ các đại lý phân phối chính thức của Syngenta.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: TÀI LIỆU -->
+    <section id="documents" class="section">
+      <span class="section-anchor" id="anchor-documents"></span>
+
+      <div id="quality">
+        <h2 class="section-title">Cam Kết Chất Lượng</h2>
+
+        <h3 class="subsection-title">🏆 Thương Hiệu Toàn Cầu</h3>
+        <p>
+          <strong>Syngenta</strong> - công ty dẫn đầu trong công nghệ Capsule
+          Suspension (CS), đã phát triển dòng sản phẩm ICON CS với hoạt chất
+          lambda-cyhalothrin và công nghệ iCAP™ độc quyền, tạo ra giải pháp hiệu
+          quả cao cho các môi trường đa dạng, từ nhà ở đến cơ sở công nghiệp.
+        </p>
+
+        <h3 class="subsection-title">✅ Tiêu Chuẩn Quốc Tế</h3>
+        <ul class="bullet">
+          <li>
+            <strong>WHO Pesticide Evaluation Scheme (WHOPES)</strong> - Đánh giá
+            và chứng nhận hiệu quả cho sản phẩm ICON CS
+          </li>
+          <li>
+            <strong>HACCP International</strong> - Chứng nhận phù hợp sử dụng
+            trong các cơ sở xử lý thực phẩm
+          </li>
+          <li>
+            <strong>EPA Registered</strong> - Hoạt chất lambda-cyhalothrin được
+            đăng ký tại Cơ quan Bảo vệ Môi trường Hoa Kỳ
+          </li>
+        </ul>
+
+        <h3 class="subsection-title">🛡️ Đăng Ký Hợp Pháp Tại Việt Nam</h3>
+        <ul class="bullet">
+          <li>
+            <strong>Giấy chứng nhận:</strong> Từ Cục Quản lý Môi trường Y tế, Bộ
+            Y tế Việt Nam
+          </li>
+          <li>
+            <strong>Ứng dụng:</strong> Y tế dự phòng và kiểm soát dịch bệnh
+          </li>
+          <li>
+            <strong>Phù hợp:</strong> Các tiêu chuẩn VSATTP trong ngành thực
+            phẩm
+          </li>
+        </ul>
+
+        <h3 class="subsection-title">📎 Tài Liệu Đính Kèm</h3>
+        <div class="download-box">
+          <div class="download-item">
+            <span>Giấy chứng nhận đăng ký của Bộ Y tế Việt Nam.pdf</span>
+            <a href="#" target="_blank">(1.2MB) ⭳</a>
+          </div>
+          <div class="download-item">
+            <span>Chứng nhận HACCP ICON 2.5CS.pdf</span>
+            <a href="#" target="_blank">(3.5MB) ⭳</a>
+          </div>
+          <div class="download-item">
+            <span>Phiếu an toàn sản phẩm ICON 2.5CS (MSDS).pdf</span>
+            <a href="#" target="_blank">(2.8MB) ⭳</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="purchase">
+        <h2 class="section-title">Thông Tin Mua Hàng</h2>
+        <p>
+          ICON 2.5CS được phân phối rộng rãi tại Việt Nam thông qua hệ thống đại
+          lý ủy quyền của Syngenta.
+        </p>
+        <p>
+          Để mua hàng chính hãng, vui lòng liên hệ các đại lý ủy quyền phân phối
+          thiết bị và hóa chất PCO trên toàn quốc. Syngenta sẵn sàn đồng hành
+          cung cấp tư vấn kỹ thuật và đào tạo từ kinh nghiệm toàn cầu.
+        </p>
+      </div>
+
+      <div id="support">
+        <h2 class="section-title">Thông Tin Hỗ Trợ</h2>
+        <p>Để được tư vấn chi tiết về ICON 2.5CS, vui lòng liên hệ:</p>
+
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>lienhe.syngenta@syngenta.com</div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>+84 28 37756200</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related products -->
+    <section class="related">
+      <h2 class="section-title">Sản Phẩm Liên Quan</h2>
+
+      <div class="card-row">
+        <div class="product-card">
+          <div class="product-card-image">
+            <img
+              src="https://placehold.co/300x200/e2e8f0/9ca3af?text=Imperator+50EC"
+              alt="Imperator 50EC"
+            />
+          </div>
+          <div class="product-card-content">
+            <span class="product-card-category">THUỐC DIỆT CÔN TRÙNG</span>
+            <h3 class="product-card-title">Imperator 50EC</h3>
+            <div class="product-card-specs">
+              Permethrin 50%<br />
+              Dạng nhũ dầu (EC)
+            </div>
+            <a href="#" class="product-card-link">Xem thêm →</a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-image">
+            <img
+              src="https://placehold.co/300x200/e2e8f0/9ca3af?text=Klerat+0.005"
+              alt="Klerat 0.005 pellet"
+            />
+          </div>
+          <div class="product-card-content">
+            <span class="product-card-category">THUỐC DIỆT CHUỘT</span>
+            <h3 class="product-card-title">Klerat 0.005 pellet</h3>
+            <div class="product-card-specs">
+              Brodifacoum 0.005%<br />
+              Dạng viên
+            </div>
+            <a href="#" class="product-card-link">Xem thêm →</a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-image">
+            <img
+              src="https://placehold.co/300x200/e2e8f0/9ca3af?text=Altriset+200SC"
+              alt="Altriset 200SC"
+            />
+          </div>
+          <div class="product-card-content">
+            <span class="product-card-category">THUỐC DIỆT MỐI</span>
+            <h3 class="product-card-title">Altriset 200SC</h3>
+            <div class="product-card-specs">
+              Chlorantraniliprole 20%<br />
+              Huyền phù đậm đặc (SC)
+            </div>
+            <a href="#" class="product-card-link">Xem thêm →</a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-image">
+            <img
+              src="https://placehold.co/300x200/e2e8f0/9ca3af?text=Arilon"
+              alt="Arilon Insecticide"
+            />
+          </div>
+          <div class="product-card-content">
+            <span class="product-card-category">THUỐC DIỆT CÔN TRÙNG</span>
+            <h3 class="product-card-title">Arilon Insecticide</h3>
+            <div class="product-card-specs">
+              Indoxacarb 20%<br />
+              Dạng hạt phân tán trong nước
+            </div>
+            <a href="#" class="product-card-link">Xem thêm →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-col">
+          <h3>Liên Hệ</h3>
+          <div class="footer-contact">
+            <span>📞</span>
+            <span>+84 28 37756200</span>
+          </div>
+          <div class="footer-contact">
+            <span>🏢</span>
+            <span>+84 28 37756298/99</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>Liên Kết Nhanh</h3>
+          <ul>
+            <li><a href="#">Sản Phẩm</a></li>
+            <li><a href="#">Giải Pháp Cây Trồng</a></li>
+            <li><a href="#">Về Chúng Tôi</a></li>
+            <li><a href="#">Tin Tức & Bài Viết</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Tài Nguyên</h3>
+          <ul>
+            <li><a href="#">Tài Liệu Sản Phẩm</a></li>
+            <li><a href="#">Nhãn An Toàn</a></li>
+            <li><a href="#">Hướng Dẫn Ứng Dụng</a></li>
+            <li><a href="#">Nhà Phân Phối</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Mạng Xã Hội</h3>
+          <div class="social-links">
+            <a href="#" class="social-icon">𝕏</a>
+            <a href="#" class="social-icon">f</a>
+            <a href="#" class="social-icon">▶</a>
+          </div>
+          <address
+            style="margin-top: 1rem; font-style: normal; font-size: 0.9rem"
+          >
+            Syngenta Việt Nam<br />
+            16F – Pearl Plaza, 561A Điện Biên Phủ,<br />
+            Phường 25, Quận Bình Thạnh, Tp.HCM
+          </address>
+        </div>
+      </div>
+
+      <div class="copyright">
+        © <span id="year"></span> Syngenta. Bảo lưu mọi quyền.
+        <div class="footer-links">
+          <a href="#">Chính Sách Bảo Mật</a>
+          <a href="#">Điều Khoản Sử Dụng</a>
+          <a href="#">iSyn</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Set current year in footer
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Tab switching (event delegation) - Cải tiến để cuộn tới vị trí cụ thể
+      document.querySelector("#tabNav nav").addEventListener("click", (e) => {
+        const btn = e.target.closest(".tab-link");
+        if (!btn) return;
+
+        // Đánh dấu tab đang active
+        document
+          .querySelectorAll(".tab-link")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        // Hiển thị section tương ứng
+        document
+          .querySelectorAll(".section")
+          .forEach((s) => s.classList.remove("active"));
+        document.getElementById(btn.dataset.target).classList.add("active");
+
+        // Cuộn đến section-anchor tương ứng
+        const anchor = document.getElementById(`anchor-${btn.dataset.target}`);
+        if (anchor) {
+          // Sử dụng setTimeout để đảm bảo section đã được hiển thị trước khi cuộn
+          setTimeout(() => {
+            const tabsHeight = document.querySelector(".tabs").offsetHeight;
+            const anchorPosition =
+              anchor.getBoundingClientRect().top + window.pageYOffset;
+            // Trừ đi chiều cao của thanh tabs + khoảng trống bổ sung (20px)
+            window.scrollTo({
+              top: anchorPosition - tabsHeight - 20,
+              behavior: "smooth",
+            });
+          }, 10);
+        }
+      });
+
+      // Xử lý hiệu ứng bóng cho thanh tabs khi cuộn
+      window.addEventListener("scroll", () => {
+        const tabs = document.querySelector(".tabs");
+        const scrollPosition = window.scrollY;
+
+        // Thêm bóng cho tabs khi đã cuộn xuống
+        if (scrollPosition > 100) {
+          tabs.classList.add("scrolled");
+        } else {
+          tabs.classList.remove("scrolled");
+        }
+      });
+
+      // Thumbnail switching
+      document.querySelectorAll(".thumbnail").forEach((thumb, index) => {
+        thumb.addEventListener("click", () => {
+          document
+            .querySelectorAll(".thumbnail")
+            .forEach((t) => t.classList.remove("active"));
+          thumb.classList.add("active");
+          // Here you would switch the main image if you had multiple product images
+          console.log(`Switched to image ${index + 1}`);
+        });
+      });
+
+      // References toggle
+      document.querySelectorAll(".reference-header").forEach((header) => {
+        header.addEventListener("click", () => {
+          const refId = header.getAttribute("data-ref");
+          const content = document.getElementById(`ref-${refId}`);
+          const toggle = header.querySelector(".reference-toggle");
+
+          if (content.classList.contains("active")) {
+            content.classList.remove("active");
+            toggle.textContent = "+";
+          } else {
+            content.classList.add("active");
+            toggle.textContent = "-";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
